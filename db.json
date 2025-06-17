@@ -1,0 +1,33 @@
+{
+    "products": [
+        {
+            "name": "Product 2 update",
+            "price": "200",
+            "description": "Description 2",
+            "image": "https://picsum.photos/150/150",
+            "id": 2
+        },
+        {
+            "id": 3,
+            "name": "Product 3",
+            "price": 300,
+            "description": "Description 3",
+            "image": "https://picsum.photos/150/150"
+        },
+        {
+            "name": "Sản phẩm 4",
+            "price": "404",
+            "description": "Mô tả",
+            "image": "https://picsum.photos/300/300",
+            "id": 4
+        }
+    ],
+    "users": [
+        {
+            "email": "admin@gmail.com",
+            "password": "$2a$10$qreEht321wUte7ndIH8zO.dpXHnq1TwjdcQNzAk21UCz1erAf8cxi",
+            "username": "admin",
+            "id": 1
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+
+- B1: Truy cập nodejs.org và tải về Node.js
+- B2: npm init -y 
+- B3:npm i json-server@0.17.4 json-server-auth -D
+- B4: Thiết lập script trong package.json
+"scripts": {
+        "server": "json-server-auth --watch db.json"
+    },
+- B5: npm run server

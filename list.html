@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Quản lý sản phẩm</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                background-color: #f8f9fa;
+                padding-top: 20px;
+            }
+            .product-card {
+                transition: transform 0.2s;
+            }
+            .product-card:hover {
+                transform: translateY(-5px);
+            }
+            .navbar {
+                margin-bottom: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Quản lý sản phẩm</a>
+                    <div class="d-flex">
+                        <span class="navbar-text me-3" id="userInfo"></span>
+                        <button class="btn btn-outline-danger">Đăng xuất</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="row mb-4">
+                <div class="col">
+                    <a href="form.html" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Thêm sản phẩm mới
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle" id="productTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Hình ảnh</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Mô tả</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productList">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            async function loadProducts() {
+                try {
+                    const response = await fetch("http://localhost:3000/products");
+                    const products = await response.json();
+
+                    const productList = document.getElementById("productList");
+                    productList.innerHTML = products
+                        .map(
+                            (product, index) => `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td width="100">
+                                <img src="${product.image}" alt="${
+                                product.name
+                            }" width="50" height="50"/>
+                                </td>
+                            <td>${product.name}</td>
+                            <td>${product.price}</td>
+                            <td>${product.description}</td>
+                            <td>
+                                <button class="btn btn-danger" onclick="deleteProduct(${
+                                    product.id
+                                })">Xóa</button>   
+                                <a href="form.html?id=${product.id}" class="btn btn-primary">Sửa</a>
+                            </td>
+                        </tr>
+                    `
+                        )
+                        .join("");
+                } catch (error) {
+                    alert("Lỗi khi tải danh sách sản phẩm");
+                }
+            }
+
+            async function deleteProduct(id) {
+                if (!confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) return;
+                try {
+                    const response = await fetch(`http://localhost:3000/products/${id}`, {
+                        method: "DELETE",
+                    });
+                    if (response.ok) {
+                        loadProducts();
+                        alert("Xóa sản phẩm thành công!");
+                    }
+                } catch (error) {
+                    alert("Không thể xóa sản phẩm!");
+                }
+            }
+            loadProducts();
+        </script>
+    </body>
+</html>
