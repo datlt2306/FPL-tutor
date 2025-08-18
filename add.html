@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <div class="container py-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Thêm sản phẩm</h2>
+                <a href="index.html" class="btn btn-primary">Quay lại</a>
+            </div>
+            <form id="add-product-form" class="w-50 mx-auto">
+                <div class="mb-3">
+                    <label for="product-name" class="form-label">Tên sản phẩm</label>
+                    <input type="text" class="form-control" id="product-name" />
+                </div>
+                <div class="mb-3">
+                    <label for="product-price" class="form-label">Giá sản phẩm</label>
+                    <input type="number" class="form-control" id="product-price" />
+                </div>
+                <div class="mb-3">
+                    <label for="product-image" class="form-label">Ảnh sản phẩm</label>
+                    <input type="text" class="form-control" id="product-image" />
+                </div>
+                <button type="submit" class="btn btn-primary">Thêm</button>
+            </form>
+        </div>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            const productFormEl = document.getElementById("add-product-form");
+            const productNameEl = document.getElementById("product-name");
+            const productPriceEl = document.getElementById("product-price");
+            const productImageEl = document.getElementById("product-image");
+
+            const API_URI = "http://localhost:3000/products";
+
+            productFormEl.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const product = {
+                    name: productNameEl.value,
+                    price: productPriceEl.value,
+                    image: productImageEl.value,
+                };
+                console.log(product);
+                // call api
+
+                const response = await fetch(API_URI, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(product),
+                });
+                if (!response.ok) {
+                    alert("Thêm sản phẩm thất bại");
+                    return;
+                }
+                const data = await response.json();
+                window.location.href = "index.html";
+            });
+        </script>
+    </body>
+</html>
