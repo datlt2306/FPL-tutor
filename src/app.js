@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 import blogRouter from "./routers/blog";
 import authRouter from "./routers/auth";
+import todoRouter from "./routers/todo";
 
 const app = express();
 
@@ -13,6 +14,7 @@ mongoose.connect(`mongodb://localhost:27017/tutor`);
 // routers
 
 app.use("/", blogRouter);
+app.use("/", todoRouter);
 app.use("/auth", authRouter);
 
 export const viteNodeApp = app;
